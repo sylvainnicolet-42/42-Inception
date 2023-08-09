@@ -1,7 +1,10 @@
 FROM debian:buster
 
+# Update and upgrade
+RUN apt update && apt upgrade -y
+
 # Install nginx
-RUN apt update && apt install nginx -y
+RUN apt install nginx -y
 
 # Install vim
 RUN apt install vim -y
@@ -14,7 +17,7 @@ RUN mkdir -p /etc/nginx/ssl && \
     -keyout /etc/nginx/ssl/inception.key  \
     -subj "/C=CH/ST=Switzerland/L=Lausanne/O=42/OU=42Lausanne/CN=login.42lausanne.ch/UID=synicole"
 
-# Copy nginx config \
+# Copy nginx config
 COPY conf/nginx.conf /etc/nginx/conf.d/default.conf
 
 # Rights
