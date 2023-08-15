@@ -1,48 +1,77 @@
-version: '3'
+# Version of docker-compose
+version: '3.8'
 
+# Services
 services:
-  mariadb:
-    container_name: mariadb               # Name of the container
-    networks:
-      - inception                         # Network to use
-    build:
-      context: requirements/mariadb       # Path to the Dockerfile
-      dockerfile: Dockerfile              # Name of the Dockerfile
-    env_file: .env                        # Path to the .env file
-    volumes:
-    - mariadb:/var/lib/mysql              # Path to the volume
-    restart: unless-stopped               # Restart unless stopped
-    expose:
-    - "3306"                              # Port to expose
-
   nginx:
-    container_name: nginx                 # Name of the container
-    volumes:
-      - wordpress:/var/www/wordpress      # Path to the volume
+    image: nginx                        # name of the image
+    container_name: nginx               # name of the container
     networks:
-      - inception                         # Network to use
+      - inception                       # name of the network
     depends_on:
-      - wordpress                         # Service to wait for
+      - wordpress                       # wordpress will be started after nginx
     build:
-      context: requirements/nginx         # Path to the Dockerfile
-      dockerfile: Dockerfile              # Name of the Dockerfile
-    env_file: .env                        # Path to the .env file
+      context: requirements/nginx       # path to the Dockerfile
+      dockerfile: Dockerfile            # name of the Dockerfile
+    env_file: .env                      # path to the .env file
     ports:
-      - "443:443"                         # Port to expose
-    restart: on-failure                   # Restart on failure
+      - "443:443"                       # port mapping
+    restart: on-failure                 # restart the container if it fails
 
   wordpress:
-      container_name: wordpress           # Name of the container
-      env_file: .env                      # Path to the .env file
-      volumes:
-          - wordpress:/var/www/wordpress  # Path to the volume
-      networks:
-          - inception                     # Network to use
-      build:
-          context: requirements/wordpress # Path to the Dockerfile
-          dockerfile: Dockerfile          # Name of the Dockerfile
-      depends_on:
-          - mariadb                       # Service to wait for
-      restart: on-failure                 # Restart on failure
-      expose:
-          - "9000"                        # Port to expose
+    image: wordpress                    # name of the image
+    container_name: wordpress           # name of the container
+    env_file: .env                      # path to the .env file
+    volumes:
+      - wordpress:/var/www/wordpress    # path to the volume
+    networks:
+      - inception                       # name of the network
+    build:
+      context: requirements/wordpress   # path to the Dockerfile
+      dockerfile: Dockerfile            # name of the Dockerfile
+    depends_on:
+      - mariadb                         # mariadb will be started after wordpress
+    restart: on-failure                 # restart the container if it fails
+    expose:
+      - "9000"                          # expose port 9000
+
+  mariadb:
+    image: mariadb                      # name of the image
+    container_name: mariadb             # name of the container
+    volumes:
+      - mariadb:/var/lib/mysql          # path to the volume
+    networks:
+      - inception                       # name of the network
+    build:
+      context: requirements/mariadb     # path to the Dockerfile
+      dockerfile: Dockerfile            # name of the Dockerfile
+    env_file: .env                      # path to the .env file
+    restart: on-failure                 # restart the container if it fails
+    expose:
+      - "3306"                          # expose port 3306
+
+## Volumes
+volumes:
+  wordpress:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '/Users/hescsen/Projects/42/42-Inception/data/wordpress'
+  mariadb:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '/Users/hescsen/Projects/42/42-Inception/data/mariadb'
+
+# Network
+networks:
+  inception:                              # name of the network
+    driver: bridge                        # type of the network
+
+# Build command : docker-compose -p inception up --build -d
+# -p : name of the project
+# up : create and start the containers
+# --build : build the images if they don't exist or if they have been modified
+# -d : run the containers in the background
