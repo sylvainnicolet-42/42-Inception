@@ -7,10 +7,18 @@ RUN apt update && apt upgrade -y
 RUN apt install mariadb-server -y
 
 # Copy mariadb config
-COPY conf/50-server.cnf	/etc/mysql/mariadb.conf.d/50-server.cnf
+#COPY conf/50-server.cnf	/etc/mysql/mariadb.conf.d/50-server.cnf
 
 # Copy script to configure mariadb
 COPY tools/configure.sh /tmp/configure.sh
 
-# Execute sql commands to create database and user
-RUN bash /tmp/configure.sh
+# 1. Run mariadb
+# 2. Execute sql commands to create database and user
+# 3. Restart mariadb
+ENTRYPOINT ["bash", "/tmp/configure.sh"]
+
+# Expose port
+EXPOSE 3306
+
+# Build command : docker build -t mariadb .
+# Run command : docker run -it mariadb

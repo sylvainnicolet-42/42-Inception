@@ -27,7 +27,7 @@ COPY conf/nginx.conf /etc/nginx/nginx.conf
 RUN chmod 755 /var/www/html && \
     chown -R www-data:www-data /var/www/html
 
-# Expose ports
+# Expose port
 EXPOSE 443
 
 # Start nginx with daemon off
