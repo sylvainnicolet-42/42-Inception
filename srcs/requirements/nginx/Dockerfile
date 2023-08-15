@@ -1,3 +1,5 @@
+
+# OS
 FROM debian:buster
 
 # Update and upgrade
@@ -10,19 +12,26 @@ RUN apt install nginx -y
 RUN apt install vim -y
 
 # Install openssl
-RUN mkdir -p /etc/nginx/ssl && \
-    apt install openssl -y && \
-    openssl req -x509 -nodes  \
-    -out /etc/nginx/ssl/inception.crt  \
-    -keyout /etc/nginx/ssl/inception.key  \
-    -subj "/C=CH/ST=Switzerland/L=Lausanne/O=42/OU=42Lausanne/CN=login.42lausanne.ch/UID=synicole"
+RUN mkdir -p /etc/nginx/ssl && apt install openssl -y
+
+# Generate ssl key and certificate
+RUN openssl req -x509 -nodes \
+    -out /etc/nginx/ssl/inception.crt \
+    -keyout /etc/nginx/ssl/inception.key \
+    -subj "/C=CH/ST=Vaud/L=Lausanne/O=42/OU=42Lausanne/CN=login.42lausanne.ch/UID=synicole"
 
 # Copy nginx config
-COPY conf/nginx.conf /etc/nginx/conf.d/default.conf
+COPY conf/nginx.conf /etc/nginx/nginx.conf
 
-# Rights
+# Give rights
 RUN chmod 755 /var/www/html && \
     chown -R www-data:www-data /var/www/html
 
-# Start nginx \
+# Expose ports
+EXPOSE 443
+
+# Start nginx with daemon off
 CMD ["nginx", "-g", "daemon off;"]
+
+# Build command : docker build -t nginx .
+# Run command : docker run -it -p 443:443 nginx
