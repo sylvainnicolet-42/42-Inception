@@ -49,8 +49,8 @@ services:
     restart: on-failure                 # restart the container if it fails
     expose:
       - "3306"                          # expose port 3306
-#    volumes:
-#      - sql:/var/lib/mysql          # path to the volume
+    volumes:
+      - sql:/var/lib/mysql          # path to the volume
 
 # Volumes
 volumes:
@@ -61,12 +61,13 @@ volumes:
       type: 'none'
       o: 'bind'
       device: ${VOLUMES_PATH}/wordpress
-#  sql:
-#    driver: local
-#    driver_opts:
-#      type: 'none'
-#      o: 'bind'
-#      device: ${VOLUMES_PATH}/mysql
+  sql:
+    name: db_volume
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: ${VOLUMES_PATH}/mysql
 
 # Network
 networks:
