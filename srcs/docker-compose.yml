@@ -18,7 +18,7 @@ services:
       - "443:443"                       # port mapping
     restart: on-failure                 # restart the container if it fails
     volumes:
-      - wordpress:/var/www/wordpress    # path to the volume
+      - wp:/var/www/wordpress    # path to the volume
 
   wordpress:
     image: wordpress                    # name of the image
@@ -35,7 +35,7 @@ services:
     expose:
       - "9000"                          # expose port 9000
     volumes:
-      - wordpress:/var/www/wordpress    # path to the volume
+      - wp:/var/www/wordpress    # path to the volume
 
   mariadb:
     image: mariadb                      # name of the image
@@ -50,22 +50,23 @@ services:
     expose:
       - "3306"                          # expose port 3306
 #    volumes:
-#      - mariadb:/var/lib/mysql          # path to the volume
+#      - sql:/var/lib/mysql          # path to the volume
 
-## Volumes
+# Volumes
 volumes:
-  wordpress:
+  wp:
+    name: wp_volume
     driver: local
     driver_opts:
       type: 'none'
       o: 'bind'
       device: ${VOLUMES_PATH}/wordpress
-  mariadb:
-    driver: local
-    driver_opts:
-      type: 'none'
-      o: 'bind'
-      device: ${VOLUMES_PATH}/mysql
+#  sql:
+#    driver: local
+#    driver_opts:
+#      type: 'none'
+#      o: 'bind'
+#      device: ${VOLUMES_PATH}/mysql
 
 # Network
 networks:

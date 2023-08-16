@@ -33,9 +33,10 @@ RUN mv wp-cli.phar /usr/local/bin/wp
 # Copy script to configure wordpress
 COPY ./tools/conf_wordpress.sh /tmp/conf_wordpress.sh
 
+EXPOSE 9000
+
 # Fill wp-config.php with env variables
-#RUN chmod +x /tmp/conf_wordpress.sh
-#ENTRYPOINT ["/tmp/conf_wordpress.sh"]
+#ENTRYPOINT ["sh", "/tmp/conf_wordpress.sh"]
 
 # Run PHP (-F : stay in foreground)
 CMD ["php-fpm7.3", "-F"]

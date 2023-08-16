@@ -27,8 +27,8 @@ purge:
 	docker image prune -f -a
 
 purge_volumes:
-	docker volume rm inception_wordpress
-	docker volume rm inception_mariadb
+	docker volume rm wp_volume
+	docker volume rm db_volume
 
 fclean: purge purge_volumes clean_data
 
