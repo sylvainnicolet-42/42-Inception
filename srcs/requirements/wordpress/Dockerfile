@@ -25,9 +25,6 @@ RUN wget https://fr.wordpress.org/wordpress-6.3-fr_FR.tar.gz -P /var/www
 # Unzip Wordpress
 RUN cd /var/www && tar -xzf wordpress-6.3-fr_FR.tar.gz && rm wordpress-6.3-fr_FR.tar.gz
 
-# Give rights to wordpress folder
-RUN chown -R root:root /var/www/wordpress
-
 # Run PHP (-F : stay in foreground)
 CMD ["php-fpm7.3", "-F"]
 
