@@ -11,12 +11,12 @@ RUN apt install mariadb-server -y
 COPY conf/50-server.cnf	/etc/mysql/mariadb.conf.d/50-server.cnf
 
 # Copy script to configure mariadb
-COPY tools/configure.sh /tmp/configure.sh
+COPY tools/conf_mariadb.sh /tmp/conf_mariadb.sh
 
 # 1. Run mariadb
 # 2. Execute sql commands to create database and user
 # 3. Restart mariadb
-ENTRYPOINT ["bash", "/tmp/configure.sh"]
+ENTRYPOINT ["sh", "/tmp/conf_mariadb.sh"]
 
 # Expose port
 EXPOSE 3306
