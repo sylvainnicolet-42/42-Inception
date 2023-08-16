@@ -15,8 +15,8 @@ RUN mkdir -p /etc/nginx/ssl && apt install openssl -y
 
 # Generate ssl key and certificate
 RUN openssl req -x509 -nodes \
-    -out /etc/nginx/ssl/inception.crt \
-    -keyout /etc/nginx/ssl/inception.key \
+    -out /etc/nginx/ssl/synicole.42lausanne.ch.crt \
+    -keyout /etc/nginx/ssl/synicole.42lausanne.ch.key \
     -subj "/C=CH/ST=Vaud/L=Lausanne/O=42/OU=42Lausanne/CN=login.42lausanne.ch/UID=synicole"
 
 # Copy nginx config

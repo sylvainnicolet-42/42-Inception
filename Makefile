@@ -3,13 +3,13 @@ include ./srcs/.env
 
 DOCKER_COMPOSE = ./srcs/docker-compose.yml
 
-all: up
-
-up:
-		docker-compose -f ${DOCKER_COMPOSE} -p inception up -d
+all: build
 
 build:
 		docker-compose -f ${DOCKER_COMPOSE} -p inception up --build -d
+
+up:
+		docker-compose -f ${DOCKER_COMPOSE} -p inception up -d
 
 down:
 		docker-compose -f ${DOCKER_COMPOSE} -p inception down
@@ -32,6 +32,15 @@ purge_volumes:
 
 fclean: purge purge_volumes clean_data
 
+nginx:
+	docker exec -it nginx bash
+
+wordpress:
+	docker exec -it wordpress bash
+
+mariadb:
+	docker exec -it mariadb bash
+
 help:
 	@echo "Usage: make [target]"
 	@echo ""
@@ -45,4 +54,6 @@ help:
 	@echo "purge: Deletes all images"
 	@echo "purge_volumes: Deletes all volumes"
 	@echo "fclean: Deletes all images and data folders"
-	@echo "help: Shows help"
+	@echo "nginx: Access to nginx container"
+	@echo "wordpress: Access to wordpress container"
+	@echo "mariadb: Access to mariadb container"
