@@ -3,43 +3,43 @@ version: '3.8'
 
 # Services
 services:
-  nginx:
-    image: nginx                        # name of the image
-    container_name: nginx               # name of the container
-    networks:
-      - inception                       # name of the network
-    depends_on:
-      - wordpress                       # wordpress will be started after nginx
-    build:
-      context: requirements/nginx       # path to the Dockerfile
-      dockerfile: Dockerfile            # name of the Dockerfile
-    env_file: .env                      # path to the .env file
-    ports:
-      - "443:443"                       # port mapping
-    restart: on-failure                 # restart the container if it fails
+#  nginx:
+#    image: nginx                        # name of the image
+#    container_name: nginx               # name of the container
+#    networks:
+#      - inception                       # name of the network
+#    depends_on:
+#      - wordpress                       # wordpress will be started after nginx
+#    build:
+#      context: requirements/nginx       # path to the Dockerfile
+#      dockerfile: Dockerfile            # name of the Dockerfile
+#    env_file: .env                      # path to the .env file
+#    ports:
+#      - "443:443"                       # port mapping
+#    restart: on-failure                 # restart the container if it fails
+#    volumes:
+#      - wordpress:/var/www/wordpress    # path to the volume
 
-  wordpress:
-    image: wordpress                    # name of the image
-    container_name: wordpress           # name of the container
-    env_file: .env                      # path to the .env file
-    volumes:
-      - wordpress:/var/www/wordpress    # path to the volume
-    networks:
-      - inception                       # name of the network
-    build:
-      context: requirements/wordpress   # path to the Dockerfile
-      dockerfile: Dockerfile            # name of the Dockerfile
-    depends_on:
-      - mariadb                         # mariadb will be started after wordpress
-    restart: on-failure                 # restart the container if it fails
-    expose:
-      - "9000"                          # expose port 9000
+#  wordpress:
+#    image: wordpress                    # name of the image
+#    container_name: wordpress           # name of the container
+#    env_file: .env                      # path to the .env file
+#    networks:
+#      - inception                       # name of the network
+#    build:
+#      context: requirements/wordpress   # path to the Dockerfile
+#      dockerfile: Dockerfile            # name of the Dockerfile
+#    depends_on:
+#      - mariadb                         # mariadb will be started after wordpress
+#    restart: on-failure                 # restart the container if it fails
+#    expose:
+#      - "9000"                          # expose port 9000
+#    volumes:
+#      - wordpress:/var/www/wordpress    # path to the volume
 
   mariadb:
     image: mariadb                      # name of the image
     container_name: mariadb             # name of the container
-    volumes:
-      - mariadb:/var/lib/mysql          # path to the volume
     networks:
       - inception                       # name of the network
     build:
@@ -49,6 +49,8 @@ services:
     restart: on-failure                 # restart the container if it fails
     expose:
       - "3306"                          # expose port 3306
+#    volumes:
+#      - mariadb:/var/lib/mysql          # path to the volume
 
 ## Volumes
 volumes:
@@ -57,13 +59,13 @@ volumes:
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: '/Users/hescsen/Projects/42/42-Inception/data/wordpress'
+      device: ${WP_VOLUME_PATH}
   mariadb:
     driver: local
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: '/Users/hescsen/Projects/42/42-Inception/data/mariadb'
+      device: ${DB_VOLUME_PATH}
 
 # Network
 networks:
