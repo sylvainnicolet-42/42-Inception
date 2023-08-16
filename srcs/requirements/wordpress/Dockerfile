@@ -25,6 +25,17 @@ RUN wget https://fr.wordpress.org/wordpress-6.3-fr_FR.tar.gz -P /var/www
 # Unzip Wordpress
 RUN cd /var/www && tar -xzf wordpress-6.3-fr_FR.tar.gz && rm wordpress-6.3-fr_FR.tar.gz
 
+# Get wp-cli
+#RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+#RUN chmod +x wp-cli.phar
+#RUN mv wp-cli.phar /usr/local/bin/wp
+
+# Copy script to configure wordpress
+#COPY ./tools/conf_wordpress.sh /tmp/conf_wordpress.sh
+
+# 1. Fill wp-config.php with env variables
+#ENTRYPOINT ["sh", "/tmp/conf_wordpress.sh"]
+
 # Run PHP (-F : stay in foreground)
 CMD ["php-fpm7.3", "-F"]
 
