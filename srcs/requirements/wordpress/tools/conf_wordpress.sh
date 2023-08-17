@@ -44,3 +44,5 @@ then
     --user_pass=${WP_USER_PASSWORD} \
     --path='/var/www'
 fi
+
+exec "$@"

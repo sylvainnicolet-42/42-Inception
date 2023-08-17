@@ -16,9 +16,6 @@ RUN apt-get install php7.3 -y \
 # Copy PHP config
 COPY ./conf/www.conf /etc/php/7.3/fpm/pool.d/www.conf
 
-# Create run directory for php-fpm
-RUN mkdir -p /run/php
-
 # Download Wordpress
 #RUN wget https://fr.wordpress.org/wordpress-6.3-fr_FR.tar.gz -P /var/www
 
@@ -32,6 +29,9 @@ RUN mkdir -p /run/php
 COPY ./tools/conf_wordpress.sh /tmp/conf_wordpress.sh
 
 EXPOSE 9000
+
+# Create run directory for php-fpm
+RUN mkdir -p /run/php
 
 # Fill wp-config.php with env variables
 ENTRYPOINT ["sh", "/tmp/conf_wordpress.sh"]
