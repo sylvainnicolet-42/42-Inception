@@ -6,10 +6,10 @@ DOCKER_COMPOSE = ./srcs/docker-compose.yml
 all: build
 
 build:
-		docker-compose -f ${DOCKER_COMPOSE} -p inception up --build -d
+		docker-compose -f ${DOCKER_COMPOSE} -p inception up --build
 
 up:
-		docker-compose -f ${DOCKER_COMPOSE} -p inception up -d
+		docker-compose -f ${DOCKER_COMPOSE} -p inception up
 
 down:
 		docker-compose -f ${DOCKER_COMPOSE} -p inception down

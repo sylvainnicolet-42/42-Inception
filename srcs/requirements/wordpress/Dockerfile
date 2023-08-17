@@ -25,6 +25,9 @@ RUN wget https://fr.wordpress.org/wordpress-6.3-fr_FR.tar.gz -P /var/www
 # Unzip Wordpress
 RUN cd /var/www && tar -xzf wordpress-6.3-fr_FR.tar.gz && rm wordpress-6.3-fr_FR.tar.gz
 
+# Give rights
+RUN chmod 755 /var/www/html && chown -R www-data:www-data /var/www/html
+
 # Get wp-cli
 RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 RUN chmod +x wp-cli.phar

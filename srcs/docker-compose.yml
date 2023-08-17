@@ -45,6 +45,11 @@ services:
     build:
       context: requirements/mariadb     # path to the Dockerfile
       dockerfile: Dockerfile            # name of the Dockerfile
+      args:
+        - SQL_DATABASE=${SQL_DATABASE}
+        - SQL_USER=${SQL_USER}
+        - SQL_PASSWORD=${SQL_PASSWORD}
+        - SQL_ROOT_PASSWORD=${SQL_ROOT_PASSWORD}
     env_file: .env                      # path to the .env file
     restart: on-failure                 # restart the container if it fails
     expose:
