@@ -10,7 +10,7 @@ then
   wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
   chmod +x wp-cli.phar
 
-  wp core download https://fr.wordpress.org/wordpress-6.3-fr_FR.tar.gz \
+  ./wp-cli.phar core download https://fr.wordpress.org/wordpress-6.3-fr_FR.tar.gz \
     --allow-root \
     --path='/var/www'
 
