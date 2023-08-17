@@ -18,7 +18,7 @@ services:
       - "443:443"                       # port mapping
     restart: on-failure                 # restart the container if it fails
     volumes:
-      - wp:/var/www/wordpress    # path to the volume
+      - wp:/var/www/html    # path to the volume
 
   wordpress:
     image: wordpress                    # name of the image
@@ -35,7 +35,7 @@ services:
     expose:
       - "9000"                          # expose port 9000
     volumes:
-      - wp:/var/www/wordpress    # path to the volume
+      - wp:/var/www/html    # path to the volume
 
   mariadb:
     image: mariadb                      # name of the image
