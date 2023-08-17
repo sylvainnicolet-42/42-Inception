@@ -19,11 +19,10 @@ RUN openssl req -x509 -nodes \
     -keyout /etc/nginx/ssl/synicole.42lausanne.ch.key \
     -subj "/C=CH/ST=Vaud/L=Lausanne/O=42/OU=42Lausanne/CN=login.42lausanne.ch/UID=synicole"
 
-# Copy nginx config
-COPY conf/nginx.conf /etc/nginx/nginx.conf
+RUN rm -rf /etc/nginx/http.d/default.conf
 
-# Give rights
-RUN chmod 755 /var/www/html && chown -R www-data:www-data /var/www/html
+# Copy nginx config
+COPY conf/nginx.conf /etc/nginx/http.d/default.conf
 
 # Expose port
 EXPOSE 443
