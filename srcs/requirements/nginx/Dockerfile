@@ -22,7 +22,10 @@ RUN openssl req -x509 -nodes \
 RUN rm -rf /etc/nginx/http.d/default.conf
 
 # Copy nginx config
-COPY conf/nginx.conf /etc/nginx/http.d/default.conf
+COPY conf/nginx.conf /etc/nginx/nginx.conf
+
+# Give rights
+#RUN chmod 755 /var/www/html && chown -R www-data:www-data /var/www/html
 
 # Expose port
 EXPOSE 443

@@ -12,7 +12,7 @@ then
 
   ./wp-cli.phar core download https://fr.wordpress.org/wordpress-6.3-fr_FR.tar.gz \
     --allow-root \
-    --path='/var/www'
+    --path='/var/www/html'
 
   # First page
   ./wp-cli.phar config create --allow-root \
@@ -22,7 +22,7 @@ then
     --dbhost=${SQL_HOST} \
     --dbcharset="utf8" \
     --dbcollate="utf8_general_ci" \
-    --path='/var/www'
+    --path='/var/www/html'
 
   sleep 2
 
@@ -34,7 +34,7 @@ then
     --admin_password=${WP_ADMIN_PASSWORD} \
     --admin_email=${WP_ADMIN_EMAIL} \
     --skip-email \
-    --path='/var/www'
+    --path='/var/www/html'
 
   sleep 2
 
@@ -42,7 +42,7 @@ then
   ./wp-cli.phar user create --allow-root \
     --role=author ${WP_USER} ${WP_USER_EMAIL} \
     --user_pass=${WP_USER_PASSWORD} \
-    --path='/var/www'
+    --path='/var/www/html'
 fi
 
 exec "$@"
