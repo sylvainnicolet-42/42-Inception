@@ -24,7 +24,7 @@ RUN service mysql start && sh /tmp/conf_mariadb.sh
 # Expose port
 EXPOSE 3306
 
-Run mariadb
+# Run mariadb
 CMD ["mysqld"]
 
 # Build command : docker build -t mariadb .

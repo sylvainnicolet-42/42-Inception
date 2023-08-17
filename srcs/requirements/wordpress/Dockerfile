@@ -26,12 +26,7 @@ RUN wget https://fr.wordpress.org/wordpress-6.3-fr_FR.tar.gz -P /var/www
 RUN cd /var/www && tar -xzf wordpress-6.3-fr_FR.tar.gz && rm wordpress-6.3-fr_FR.tar.gz
 
 # Give rights
-RUN chmod 755 /var/www/html && chown -R www-data:www-data /var/www/html
-
-# Get wp-cli
-RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
-RUN chmod +x wp-cli.phar
-RUN mv wp-cli.phar /usr/local/bin/wp
+RUN chmod 755 /var/www/wordpress && chown -R www-data:www-data /var/www/wordpress
 
 # Copy script to configure wordpress
 COPY ./tools/conf_wordpress.sh /tmp/conf_wordpress.sh
@@ -39,7 +34,7 @@ COPY ./tools/conf_wordpress.sh /tmp/conf_wordpress.sh
 EXPOSE 9000
 
 # Fill wp-config.php with env variables
-#ENTRYPOINT ["sh", "/tmp/conf_wordpress.sh"]
+ENTRYPOINT ["sh", "/tmp/conf_wordpress.sh"]
 
 # Run PHP (-F : stay in foreground)
 CMD ["php-fpm7.3", "-F"]

@@ -6,8 +6,12 @@ sleep 10
 # Check if wordpress is already installed
 if [ ! -e /var/www/wordpress/wp-config.php ]
 then
+  # Get wp-cli
+  wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+  chmod +x wp-cli.phar
+
   # First page
-  wp config create --allow-root \
+  ./wp-cli.phar config create --allow-root \
     --dbname=${SQL_DATABASE} \
     --dbuser=${SQL_USER} \
     --dbpass=${SQL_PASSWORD} \
@@ -19,7 +23,7 @@ then
   sleep 2
 
   # Second page
-  wp core install --allow-root \
+  ./wp-cli.phar core install --allow-root \
     --url=${WP_SITE_URL} \
     --title=${WP_SITE_TITLE} \
     --admin_user=${WP_ADMIN_USER} \
@@ -31,7 +35,7 @@ then
   sleep 2
 
   # Create user
-  wp user create --allow-root \
+  ./wp-cli.phar user create --allow-root \
     --role=author ${WP_USER} ${WP_USER_EMAIL} \
     --user_pass=${WP_USER_PASSWORD} \
     --path='/var/www/wordpress'
